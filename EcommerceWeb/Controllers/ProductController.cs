@@ -248,10 +248,8 @@ namespace EcommerceWeb.Controllers
         //    return View("Search", model);
         //}
 
-        private ProductIndexViewModel Sort(ProductIndexViewModel model, string sort)
-        {
-            throw new NotImplementedException();
-        }
+        private EcommerceModel db = new EcommerceModel();
+        
 
 
         public ViewResult Search(string sortOrder, string searchString)
@@ -266,24 +264,42 @@ namespace EcommerceWeb.Controllers
             {
                 prod = prod.Where(p => p.Name.Contains(searchString) || p.Description.Contains(searchString));
             }
+            var prods = from p in db.Products
+                        select p;
+
             switch (sortOrder)
             {
                 case "name_desc":
                     prod = prod.OrderByDescending(s => s.Name);
                     break;
-                case "price_desc":
+                case "Price":
                     prod = prod.OrderBy(s => s.Price);
                     break;
+                case "price_desc":
+                    prod = prod.OrderByDescending(s => s.Price);
+                    break;
+                default:
+                    prod = prod.OrderBy(s => s.Name);
+                    break;
             }
-            
-            return View(prod.ToList());
+
+            return View(prod);
         }
 
-        public void SortProducts(string sort, ViewModels.ProductIndexViewModel model)
+        //public ActionResult Search2(string sortOrder)
+        //{
+        //    var prod = from p in db.Products
+        //               select p;
+        //}
+
+        public void SortProducts(string sortOrder, ViewModels.ProductIndexViewModel model)
         {
-            model.SortName = String.IsNullOrEmpty(sort) ? "name_desc" : "";
-            model.SortPrice = sort == "Price" ? "price_desc" : "price";
-            switch (sort)
+            ViewBag.SortName = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.SortPrice = sortOrder == "Price" ? "price_desc" : "price";
+            var prods = from p in db.Products
+                        select p;
+
+            switch (sortOrder)
             {
                 case "name_desc":
                     model.ProductList = model.ProductList.OrderByDescending(s => s.Name).ToList();

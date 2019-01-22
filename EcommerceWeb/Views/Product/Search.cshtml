@@ -1,4 +1,4 @@
-﻿@model  List<EcommerceWeb.Models.ProductsModel>
+﻿@model  IEnumerable<EcommerceWeb.Models.ProductsModel>
 @{
     ViewBag.Title = "Index";
 }
@@ -8,15 +8,15 @@
     <table class="table">
         <tr>
             <th>
-                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, searchString = ViewBag.CurrentFilter })
+                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm})
             </th>
             <th>
                Description
             </th>
             <th>
-                @Html.ActionLink("Price", "Index", new { sortOrder = ViewBag.PriceSortParm, searchString = ViewBag.CurrentFilter })
+                @Html.ActionLink("Price", "Index", new { sortOrder = ViewBag.PriceSortParm})
             </th>
-            <th></th>
+            <th>@Html.ActionLink("String", "Index", new { searchString = ViewBag.CurrentFilter})</th>
         </tr>
 
 
