@@ -24,14 +24,6 @@
 </table>
 
 
-@using (Html.BeginForm("Index", "Product", FormMethod.Get))
-{
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
-}
-
 <hr style="border:1px solid black" />
 <table class="table">
     <tr>

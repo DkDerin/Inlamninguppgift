@@ -1,6 +1,8 @@
 ﻿using EcommerceWeb.Models;
 using EcommerceWeb.ViewModels;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,27 @@ namespace EcommerceWeb.Controllers
 {
     public class UserListController : Controller
     {
+
+        ApplicationDbContext context;
+        //Added
+        public UserListController()
+        {
+            context = new ApplicationDbContext();
+        }
+
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
         // GET: UserList
         public ActionResult Index()
         {
@@ -60,61 +83,46 @@ namespace EcommerceWeb.Controllers
         //    //var user = context.Users.Where(u => u.Id == id.ToString()).FirstOrDefault();
         //    return RedirectToAction("UserList");
         //}
-        //[AllowAnonymous]
-        //public ActionResult UserEdit(string id)
+
+
+
+        ////SetUpAvailableCategories För EDIT
+        //void SetupAvailableUsers(ViewModels.UserCRUDViewModel model)
         //{
-        //    var context = new Models.ApplicationDbContext();
-        //    var user = context.Users.Where(u => u.Id == id).FirstOrDefault();
-        //    return View(user);
-        //}
-        //[AllowAnonymous]
-        //[HttpPost]
-        //public ActionResult UserEdit(ApplicationUser appuser)
-        //{
-        //    var context = new Models.ApplicationDbContext();
-        //    var user = context.Users.Where(u => u.Id == appuser.Id).FirstOrDefault();
-        //    //context.Entry(appuser).State = EntityState.Modified;
-        //    user.Email = appuser.Email;
-        //    user.UserName = appuser.UserName;
-        //    user.PhoneNumber = appuser.PhoneNumber;
-        //    user.PasswordHash = user.PasswordHash;
-        //    context.SaveChanges();
-        //    //var user = context.Users.Where(u => u.Id == id.ToString()).FirstOrDefault();
-        //    return RedirectToAction("UserList");
+        //    model.AvailableUsers = new List<SelectListItem>
+        //    {
+        //         new SelectListItem {Value = null , Text ="..Choose a Role.."},
+
+
+        //    };
+        //    using (var db = new ApplicationDbContext())
+        //    {
+        //        foreach (var use in db.Users)
+        //        {
+        //            model.AvailableUsers.Add(new SelectListItem { Value = use.Id.ToString(), Text = use.UserName });
+
+        //        }
+        //    }
         //}
 
-        //SetUpAvailableCategories För EDIT
-        void SetupAvailableUsers(ViewModels.UserCRUDViewModel model)
-        {
-            model.AvailableUsers = new List<SelectListItem>
-            {
-                 new SelectListItem {Value = null , Text ="..Choose a Role.."},
-
-
-            };
-            using (var db = new ApplicationDbContext())
-            {
-                foreach (var use in db.Users)
-                {
-                    model.AvailableUsers.Add(new SelectListItem { Value = use.Id.ToString(), Text = use.UserName });
-                }
-            }
-        }
-
-        [Authorize(Roles = "Admin")]
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(string id)
         {
-
+            var model = new UserCRUDViewModel();
+            var user = UserManager.FindById(id);
             using (var db = new ApplicationDbContext())
             {
-                var model = new UserCRUDViewModel();
-                var user = UserManager.FindById(id);
                 model.UserId = user.Id;
                 model.Email = user.Email;
                 model.UserName = user.UserName;
                 model.UserRoles = UserManager.GetRoles(user.Id).SingleOrDefault();
-                model.AvailableUsers = new SelectList(context.Roles, "Name", "Name");
+                model.AvailableUsers = new List<SelectListItem>();
+
+                foreach (var item in db.Roles)
+                {
+                    model.AvailableUsers.Add(new SelectListItem { Value = item.Name, Text = item.Name });
+                }
 
                 return View(model);
             }
@@ -133,18 +141,8 @@ namespace EcommerceWeb.Controllers
                 var user = UserManager.FindById(model.UserId);
                 user.Id = model.UserId;
 
-                string choosenRole = Request.Form["Roles"];
-
-                if (model.UserRoles == "Admin")
-                {
-                    UserManager.RemoveFromRole(user.Id, "Admin");
-                    UserManager.AddToRole(user.Id, "ProductManager");
-                }
-                else if (model.UserRoles == "ProductManager")
-                {
-                    UserManager.RemoveFromRole(user.Id, "ProductManager");
-                    UserManager.AddToRole(user.Id, "Admin");
-                }
+                UserManager.RemoveFromRole(user.Id, model.UserRoles);
+                UserManager.AddToRole(user.Id, model.UserDropDown);
 
                 db.SaveChanges();
                 return RedirectToAction("Index");

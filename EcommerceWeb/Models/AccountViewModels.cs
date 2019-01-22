@@ -64,6 +64,9 @@ namespace EcommerceWeb.Models
 
     public class RegisterViewModel
     {
+        //added userId
+        public int UserId { get; set; }
+        //added usernameS with S in the end
         [Display(Name = "UserNames")]
         public string UserNames { get; set; }
 
@@ -73,7 +76,7 @@ namespace EcommerceWeb.Models
         public string Email { get; set; }
 
 
-        //UserName property created
+        //UserName 
         [Display(Name = "UserName")]
         public string UserName { get; set; }
 

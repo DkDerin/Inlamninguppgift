@@ -182,9 +182,9 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UserListController.cs" />
-    <Compile Include="Migrations\201901201927071_initial.cs" />
-    <Compile Include="Migrations\201901201927071_initial.Designer.cs">
-      <DependentUpon>201901201927071_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201901221048525_init.cs" />
+    <Compile Include="Migrations\201901221048525_init.Designer.cs">
+      <DependentUpon>201901221048525_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CategoryModel.cs" />
@@ -297,8 +297,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901201927071_initial.resx">
-      <DependentUpon>201901201927071_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901221048525_init.resx">
+      <DependentUpon>201901221048525_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

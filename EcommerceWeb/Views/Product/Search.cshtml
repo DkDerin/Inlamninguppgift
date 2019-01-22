@@ -1,28 +1,48 @@
-﻿@model EcommerceWeb.ViewModels.ProductViewViewModel
+﻿@model  List<EcommerceWeb.Models.ProductsModel>
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = "Index";
 }
-<h2>View</h2>
 
-
-
-@using (Html.BeginForm("Index", "Product", FormMethod.Get))
-{
-    <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </p>
-}
+<h2>Search</h2>
 
     <table class="table">
         <tr>
-            <th>Description</th>
-            <th>Name</th>
-            <th>Price</th>
+            <th>
+                @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm, searchString = ViewBag.CurrentFilter })
+            </th>
+            <th>
+               Description
+            </th>
+            <th>
+                @Html.ActionLink("Price", "Index", new { sortOrder = ViewBag.PriceSortParm, searchString = ViewBag.CurrentFilter })
+            </th>
+            <th></th>
         </tr>
+
+
+        @foreach(var item in Model)
+        {
         <tr>
-            <td>@Model.Description</td>
-            <td>@Model.Name</td>
-            <td>@Model.Price</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem=>item.Price)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
+            </td>
         </tr>
+        }
+
     </table>
+
+<p>
+    @Html.ActionLink("Back to Categories", "Index", new { }, null)
+</p>

@@ -65,6 +65,7 @@ namespace EcommerceWeb.ViewModels
 
         public string UserRoles { get; set; }
 
+        public string UserDropDown { get; set; }
         public List<SelectListItem> AvailableUsers { get; set; }
     }
 }

@@ -55,7 +55,10 @@
             <div id="search" class="container-fluid">
                 @using (Html.BeginForm("Search", "Product", FormMethod.Get))
                 {
-                    <p class="text-center">Search: @Html.TextBox("Search") <input type="submit" value="Search" /></p>
+                    <p>
+                        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+                        <input type="submit" value="🔍" />
+                    </p>
                 }
             </div>
             <p>&copy; @DateTime.Now.Year - Derin ASP.NET Application</p>

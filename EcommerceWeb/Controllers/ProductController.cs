@@ -254,30 +254,99 @@ namespace EcommerceWeb.Controllers
         }
 
 
-        //public ViewResult Search(string sortOrder, string searchString)
-        //{
-        //    EcommerceModel db = new EcommerceModel();
-        //    ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-        //    ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
-        //    var students = from s in db.Products
-        //                   select s;
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        students = students.Where(s => s.Name.Contains(searchString)
-        //                               || s.Description.Contains(searchString));
-        //    }
-        //    switch (sortOrder)
-        //    {
-        //        case "name_desc":
-        //            students = students.OrderByDescending(s => s.Name);
-        //            break;
-        //        case "Date":
-        //            students = students.OrderBy(s => s.Description);
-        //            break;
-        //    }
+        public ViewResult Search(string sortOrder, string searchString)
+        {
+            EcommerceModel db = new EcommerceModel();
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.PriceSortParm = sortOrder == "Price" ? "price_desc" : "Price";
+            ViewBag.CurrentFilter = searchString;
+            var prod = from s in db.Products
+                       select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                prod = prod.Where(p => p.Name.Contains(searchString) || p.Description.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    prod = prod.OrderByDescending(s => s.Name);
+                    break;
+                case "price_desc":
+                    prod = prod.OrderBy(s => s.Price);
+                    break;
+            }
+            
+            return View(prod.ToList());
+        }
 
-        //    return View(students.ToList());
+        public void SortProducts(string sort, ViewModels.ProductIndexViewModel model)
+        {
+            model.SortName = String.IsNullOrEmpty(sort) ? "name_desc" : "";
+            model.SortPrice = sort == "Price" ? "price_desc" : "price";
+            switch (sort)
+            {
+                case "name_desc":
+                    model.ProductList = model.ProductList.OrderByDescending(s => s.Name).ToList();
+                    break;
+                case "Price":
+                    model.ProductList = model.ProductList.OrderBy(s => s.Price).ToList();
+                    break;
+                case "price_desc":
+                    model.ProductList = model.ProductList.OrderByDescending(s => s.Price).ToList();
+                    break;
+                default:
+                    model.ProductList = model.ProductList.OrderBy(s => s.Name).ToList();
+                    break;
+            }
+        }
+
+
+
+        //public ProductIndexViewModel Sort(ProductIndexViewModel model, string sort)
+        //{
+        //    if (sort == "ProductNameAsc")
+        //        model.ProductList = model.ProductList.OrderBy(r => r.Name).ToList();
+        //    else if (sort == "ProductNameDesc")
+        //        model.ProductList = model.ProductList.OrderByDescending(r => r.Name).ToList();
+
+
+        //    if (sort == "ProductPriceAsc")
+        //        model.ProductList = model.ProductList.OrderBy(r => r.Price).ToList();
+        //    else if (sort == "ProductPriceDesc")
+        //        model.ProductList = model.ProductList.OrderByDescending(r => r.Price).ToList();
+        //    model.CurrentSort = sort;
+        //    return model;
         //}
+
+
+        //public ActionResult Search(string searchString, string sort)
+        //{
+        //    var model = new ProductIndexViewModel();
+        //    using (var db = new EcommerceModel())
+        //    {
+        //        if (!string.IsNullOrEmpty(searchString))
+        //        {
+        //            var products = db.Products.Where(p => p.Name.Contains(searchString));
+        //            foreach (var p in products)
+        //            {
+        //                var pModel = new ProductIndexViewModel.ProductListViewModel
+        //                {
+        //                    ProductId = p.ProductId,
+        //                    Name = p.Name,
+        //                    Description = p.Description,
+        //                    Price = p.Price,
+        //                    CategoryId = p.Category.CategoryId
+
+        //                };
+        //                model.ProductList.Add(pModel);
+        //            }
+        //            model = Sort(model, sort);
+        //        }
+        //        return View(model);
+        //    }
+        //}
+
+
     }
-    
+
 }

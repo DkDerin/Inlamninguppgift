@@ -31,5 +31,7 @@ namespace EcommerceWeb.ViewModels
         }
         public List<ProductListViewModel> ProductList { get; set; }
         public string CurrentSort { get; set; }
+        public string SortName { get; set; }
+        public string SortPrice { get; set; }
     }
 }

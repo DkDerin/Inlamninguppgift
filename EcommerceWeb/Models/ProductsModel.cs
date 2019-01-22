@@ -15,6 +15,6 @@ namespace EcommerceWeb.Models
         public decimal Price { get; set; }
         public int CategoryId { get; set; }
 
-        public CategoryModel Category { get; set; }
+        public virtual CategoryModel Category { get; set; }
     }
 }

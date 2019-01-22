@@ -1,15 +1,29 @@
-﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+﻿@model EcommerceWeb.ViewModels.UserCRUDViewModel
 @{
+    /**/
+
     ViewBag.Title = "Edit";
 }
-<h2>AssignRoleToUser</h2>
-@using (Html.BeginForm())
+<h2>Give user a new role</h2>
+@using (Html.BeginForm(FormMethod.Post))
 {
-    <div class="form-group">
-        @Html.Label("Select your user type", new { @class = "col-md-2 control-lable " })
-        <div class="col-md-10">
-            @Html.DropDownList("UserName")
-        </div>
-    </div>
-    <input type="submit" value="Create Role" />
+    @Html.AntiForgeryToken()
+
+    <table class="table">
+        @Html.HiddenFor(model => model.UserId)
+        @Html.HiddenFor(model => model.UserRoles)
+        <tr>
+            <td>Email</td>
+            <td>@Html.DisplayFor(model => model.Email, new { @class = "form-control" })</td>
+        </tr>
+
+        <tr>
+            <td>Role</td>
+            <td>
+                @Html.DropDownListFor(model => model.UserDropDown, Model.AvailableUsers)
+            </td>
+        </tr>
+    </table>
+
+    <input type="submit" value="Save" class="btn btn-default" style="background-color:lightgreen" />
 }
