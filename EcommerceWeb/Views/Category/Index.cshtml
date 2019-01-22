@@ -1,0 +1,68 @@
+﻿@model EcommerceWeb.ViewModels.CategoryIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Category page</h2>
+
+<style>
+    #UpandDown{               
+        text-align:right;
+        padding-left:700px;
+        
+    }
+</style>
+
+<table class="table">
+    @if (Request.IsAuthenticated)
+    {
+        <tr>
+            @Html.ActionLink("Create New Product", "Create")
+        </tr>
+
+    }
+</table>
+
+<hr style="border:1px solid black"/>
+
+<table class="table">    
+    <tr>
+        <th>Select a category to show products</th>
+        <th id="UpandDown">
+            @if (Model.CurrentSort == "NamnAsc")
+            {
+                @Html.ActionLink("⇩", "Index", new { sort = "NamnDesc" })
+            }
+            else
+            {
+                @Html.ActionLink("⇧", "Index", new { sort = "NamnAsc" })
+            }
+          
+        </th>
+        
+        <th>SortBy</th>
+        
+    </tr>
+
+    @foreach (var item in Model.Categories)
+    {
+    <tr>
+
+        <td>
+            <li>
+                @Html.ActionLink(item.Name, "Index", "Product", new { id = item.CategoryId }, null)
+            </li>
+        </td>
+        @if (Request.IsAuthenticated)
+        {
+            <td style="text-align:right"> @Html.ActionLink("✐", "Edit", new { id = item.CategoryId }) </td>
+            <td style="text-align:right"> @Html.ActionLink("❌", "Delete", new { id = item.CategoryId }) </td>
+
+        }
+        <td></td>
+        <td></td>
+    </tr>
+    }
+
+</table>

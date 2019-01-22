@@ -1,0 +1,28 @@
+﻿@model EcommerceWeb.ViewModels.ProductViewViewModel
+@{
+    ViewBag.Title = "View";
+}
+<h2>View</h2>
+
+
+
+@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
+    <table class="table">
+        <tr>
+            <th>Description</th>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+        <tr>
+            <td>@Model.Description</td>
+            <td>@Model.Name</td>
+            <td>@Model.Price</td>
+        </tr>
+    </table>

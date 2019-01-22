@@ -1,0 +1,32 @@
+﻿@model EcommerceWeb.ViewModels.CategoryCreateViewModel
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3 style="border-color:red">Are you sure you want to delete this? By deleting this category you will also delete the products signed to this category.</h3>
+
+<table class="table">
+    <hr style="border-color:red"/>
+    <tr>
+        <td> @Html.DisplayFor(model => model.Name)</td>
+        <h4> @Html.DisplayNameFor(model => model.Name)</h4>
+
+    </tr>
+
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <tr>
+            <td>
+                <input type="submit" value="Delete" class="btn btn-default" style="background-color:red" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </td>
+        </tr>
+    }
+
+
+</table>

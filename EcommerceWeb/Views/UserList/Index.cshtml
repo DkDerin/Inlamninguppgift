@@ -1,0 +1,26 @@
+﻿@model IEnumerable<EcommerceWeb.ViewModels.UserIndexViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Users</h2>
+
+<table class="table">
+    <tr>
+        <th>User Email</th>
+        <th>Role</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>@item.Email</td>
+        <td>@item.UserRoles</td>
+        <td> @Html.ActionLink("✐", "Edit", new { id = item.UserId }) </td>
+        <td> @Html.ActionLink("❌", "Delete", new { id = item.UserId }) </td>
+    </tr>
+    }
+
+</table>

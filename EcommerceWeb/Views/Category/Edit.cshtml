@@ -1,0 +1,33 @@
+﻿@model EcommerceWeb.ViewModels.CategoryEditViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Make changes to Category</h2>
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+<table>
+    <tr>
+        <th></th>
+        <th></th>
+    </tr>
+
+    <tr>
+        <td>Category Name:</td>
+        <td>
+            @Html.HiddenFor(Model => Model.CategoryId)
+            @Html.TextBoxFor(Model => Model.Name)
+            @Html.ValidationMessageFor(Model => Model.Name)
+        </td>
+    </tr>
+
+
+</table>
+
+    <input type="submit" value="Save" style="background-color:lightgreen"/>
+
+
+}
+
+

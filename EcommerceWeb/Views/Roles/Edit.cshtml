@@ -1,0 +1,9 @@
+﻿@model EcommerceWeb.Models.ApplicationUser
+@using (Html.BeginForm())
+{
+    @*@Html.HiddenFor(model => model.Id)*@
+    <p>UserName:@Html.EditorFor(model => model.UserName)</p>
+    <p>PhoneNumber:@Html.EditorFor(model => model.PhoneNumber)</p>
+    <p>Email:@Html.EditorFor(model => model.Email)</p>
+    <input type="submit" />
+}

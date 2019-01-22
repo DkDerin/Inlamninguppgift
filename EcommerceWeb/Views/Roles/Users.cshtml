@@ -1,0 +1,28 @@
+﻿@model IEnumerable<EcommerceWeb.Models.ApplicationUser>
+@{
+    ViewBag.Title = "UserList";
+}
+<style>
+    th, td {
+        text-align: center;
+    }
+</style>
+<h2>UserList</h2>
+<table>
+    <tr>
+        <th>@Html.DisplayName("UserName")</th>
+        <th>@Html.DisplayName("Email")</th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(model => item.UserName)</td>
+            <td>@Html.DisplayFor(model => item.Email)</td>
+            <td>@Html.DisplayFor(model => item.Roles)</td>
+            <td>@Html.ActionLink("Delete", "UserDelete", new { id = item.Id })</td>
+            <td>@Html.ActionLink("Edit", "UserEdit", new { id = item.Id })</td>
+        </tr>
+    }
+</table>

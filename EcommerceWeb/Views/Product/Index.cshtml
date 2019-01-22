@@ -1,0 +1,70 @@
+﻿@model EcommerceWeb.ViewModels.ProductIndexViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+}
+<style>
+
+    #UpandDown {
+        text-align: right;
+        padding-left: 800px;
+    }
+</style>
+<h3>Products Available</h3>
+
+<table class="table">
+    @if (Request.IsAuthenticated)
+    {
+        <tr>
+            @Html.ActionLink("Create New Product", "Create")
+        </tr>
+
+    }
+</table>
+
+
+@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<hr style="border:1px solid black" />
+<table class="table">
+    <tr>
+        <th>Select a Product to view</th>
+        <th id="UpandDown">
+            @if (Model.CurrentSort == "NamnAsc")
+            {
+                @Html.ActionLink("⇩", "Index", new { sort = "NamnDesc" })
+            }
+            else
+            {
+                @Html.ActionLink("⇧", "Index", new { sort = "NamnAsc" })
+            }
+        </th>
+        <th>SortBy</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.ProductList)
+    {
+        <tr>
+            <td>
+                <li>
+                    @Html.ActionLink(item.Name, "View", "Product", new { id = item.ProductId }, null)
+                </li>
+            </td>
+            @if (Request.IsAuthenticated)
+            {
+                <td style="text-align:right"> @Html.ActionLink("✐", "Edit", new { id = item.ProductId }) </td>
+                <td style="text-align:right"> @Html.ActionLink("❌", "Delete", new { id = item.ProductId }) </td>
+
+            }
+            <td></td>
+            <td></td>
+        </tr>
+    }
+</table>

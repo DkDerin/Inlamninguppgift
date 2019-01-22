@@ -1,0 +1,20 @@
+﻿@model EcommerceWeb.ViewModels.ProductViewViewModel
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<table class="table">
+    <tr>
+        <th>Description</th>
+        <th>Name</th>
+        <th>Price</th>
+    </tr>
+    <tr>                
+        <td>@Model.Description</td>
+        <td>@Model.Name</td>
+        <td>@Model.Price</td>
+    </tr>
+
+</table>

@@ -1,0 +1,51 @@
+﻿@model EcommerceWeb.ViewModels.ProductCreateViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Create Product</h2>
+
+<p>
+    @Html.ActionLink("Back to list", "Index")
+</p>
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+<table class="table">
+
+    <tr>
+        <td>Product Namn</td>
+        <td>
+            @Html.TextBoxFor(Model => Model.Name)
+            @Html.ValidationMessageFor(Model=>Model.Name)
+        </td>
+    </tr>
+
+    <tr>
+        <td>Enter Product Description</td>
+        <td>
+            @Html.TextAreaFor(Model => Model.Description)
+            
+        </td>
+    </tr>
+
+    <tr>
+        <td>Price</td>
+        <td>
+            @Html.TextBoxFor(Model => Model.Price)
+            @Html.ValidationMessageFor(Model => Model.Description)
+        </td>
+    </tr>
+
+    <tr>
+        <td>Select a Category</td>
+        <td>
+            @Html.DropDownListFor(Model => Model.CategoryId, Model.AvailableCategory)            
+        </td>
+    </tr>
+
+</table>
+    <input type="submit" value="Spara" style="background-color:lightgreen" />
+
+}
+

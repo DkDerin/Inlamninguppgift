@@ -1,0 +1,28 @@
+﻿@model EcommerceWeb.ViewModels.CategoryCreateViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Create Category</h2>
+
+<p>
+    @Html.ActionLink("Back to list", "Index")
+</p>
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+    <table class="table">
+
+        <tr>
+            <td>
+                @Html.TextBoxFor(Model => Model.Name)
+                @Html.ValidationMessageFor(Model => Model.Name)
+
+            </td>
+        </tr>
+
+    </table>
+    <input type="submit" value="Spara" style="background-color:lightgreen"/>
+
+}
+

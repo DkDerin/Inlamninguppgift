@@ -1,0 +1,51 @@
+﻿@model EcommerceWeb.ViewModels.ProductEditViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Make changes</h2>
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+<table class="table">
+    <tr>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>Product Name</td>
+        <td>
+            @Html.HiddenFor(Model => Model.ProductId)
+            @Html.TextBoxFor(Model => Model.Name)
+            @Html.ValidationMessageFor(Model => Model.Name)
+        </td>
+    </tr>
+    <br />
+    <tr>
+        <td>Describe Product</td>
+        <td>
+            @Html.TextAreaFor(Model => Model.Description)
+        </td>
+    </tr>
+
+    <br />
+
+    <tr>
+        <td>Price</td>
+        <td>
+            @Html.TextBoxFor(Model => Model.Price)
+            @Html.ValidationMessageFor(Model => Model.Price)
+        </td>
+    </tr>
+    <tr>
+        <td>Select a Category</td>
+        <td>@Html.DropDownListFor(Model => Model.CategoryId, Model.AvailableCategory)</td>
+    </tr>
+</table>
+
+    <input type="submit" value="Save" style="background-color:lightgreen"/>
+
+
+}
+
+
